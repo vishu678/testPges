@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ESG & IAQ Auto Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f6f8;
+            color: #222;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2.4rem;
+            color: #0a2e49;
+        }
+        .header p {
+            font-size: 1rem;
+            color: #5a5a5a;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+            transition: all 0.2s ease-in-out;
+        }
+        .card:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.4rem;
+            color: #003366;
+        }
+        .card .meta {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        .card .content {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        .card a {
+            text-decoration: none;
+            color: #0074cc;
+            font-weight: 500;
+        }
+        .card a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌱 IAQ & ESG Blog</h1>
+            <p>Latest AI-generated summaries from corporate IAQ and ESG reports</p>
+        </div>
+
+        {% for item in summaries %}
+        <div class="card">
+            <h2>{{ item.title or "Unnamed Company" }}</h2>
+            <div class="meta">{{ item.date_of_publication or "Unknown Date" }} | {{ item.source }}</div>
+        
+            <div style="display: flex; gap: 20px;">
+                {% if static_images[item.url] %}
+                    <img src="{{ url_for('api.serve_gallery_image', filename=static_images[item.url]) }}"
+                        alt="IAQ Visual"
+                        style="max-width: 200px; max-height: 150px;">
+                {% endif %}
+                <div class="content" style="flex: 1;">
+                    {{ item.summary | safe }}
+                </div>
+            </div>
+        
+            <a href="{{ item.url }}" target="_blank">🔗 Read Full Report</a>
+        </div>
+        {% else %}
+        <p style="text-align:center; color:#888;">No summaries found.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
