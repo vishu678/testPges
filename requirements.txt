@@ -1,0 +1,9 @@
+Flask
+Flask-SQLAlchemy
+requests
+beautifulsoup4
+PyPDF2
+spacy
+pymupdf
+googlesearch-python
+feedparser
